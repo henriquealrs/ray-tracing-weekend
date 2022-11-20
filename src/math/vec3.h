@@ -17,7 +17,7 @@ public:
     }
 
     vec3 operator/(double x) const  noexcept {
-        return vec3(this->e[0] * x, this->e[1] * x, this->e[2] * x);
+        return vec3(this->e[0] / x, this->e[1] / x, this->e[2] / x);
     }
 
     vec3& operator+=(const vec3& op) {
@@ -114,6 +114,6 @@ inline vec3 cross(const vec3 &u, const vec3 &v) {
 
 inline vec3 unit_vector(const vec3& v) {
     auto ret = v / v.length();
-//    std::cerr << v << " - " << v.length() <<  "\n";
+    std::cerr << v << " >>> " << ret.length() <<  "\n";
     return ret;
 }

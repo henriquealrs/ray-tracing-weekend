@@ -12,3 +12,7 @@ TEST(Vec3, Sum) {
     ASSERT_TRUE((-vec3(.1, .2, .3) + vec3(.1, .1, .1)) == vec3(0., -.1, -.2));
 
 }
+
+TEST(Vec3, division) {
+    ASSERT_TRUE((vec3(3, 4, 5) / 10) == vec3(.3, .4, .5));
+}
