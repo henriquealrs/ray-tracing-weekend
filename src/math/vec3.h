@@ -3,6 +3,7 @@
 #include <iostream>
 
 class vec3 {
+    const double COMPARE_THRESHOLD = 0.0001;
 public:
     vec3() : e{0,0,0} {}
     vec3(double x, double y, double z) : e{x, y, z} {}
@@ -56,6 +57,18 @@ public:
     double operator[](int i) const { return e[i]; }
     double& operator[](int i) { return e[i]; }
 
+    bool operator==(const vec3& v) {
+        return ( std::abs(e[0] -  v.e[0]) <= COMPARE_THRESHOLD) &&
+                ( std::abs(e[1] -  v.e[1]) <= COMPARE_THRESHOLD) &&
+                ( std::abs(e[2] -  v.e[2]) <= COMPARE_THRESHOLD);
+    }
+
+    bool operator!=(const vec3& v) {
+        return ( std::abs(e[0] -  v.e[0]) > COMPARE_THRESHOLD) ||
+                ( std::abs(e[1] -  v.e[1]) > COMPARE_THRESHOLD) ||
+                ( std::abs(e[2] -  v.e[2]) > COMPARE_THRESHOLD);
+    }
+
     double e[3];
 };
 
@@ -101,6 +114,6 @@ inline vec3 cross(const vec3 &u, const vec3 &v) {
 
 inline vec3 unit_vector(const vec3& v) {
     auto ret = v / v.length();
-    std::cerr << v << " - " << v.length() <<  "\n";
+//    std::cerr << v << " - " << v.length() <<  "\n";
     return ret;
 }

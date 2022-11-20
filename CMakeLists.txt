@@ -19,6 +19,6 @@ target_include_directories(raytracing PRIVATE "src")
 # Just for example add some compiler flags.
 target_compile_options(raytracing PUBLIC -O2 -Wall -Wfloat-conversion)
 
-
+enable_testing()
 add_subdirectory( tests)
 
