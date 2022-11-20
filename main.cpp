@@ -2,8 +2,15 @@
 #include "color/color.h"
 #include "math/ray.h"
 #include "math/vec3.h"
+#include "objects/object.h"
+#include "objects/sphere.h"
 
+#include <vector>
 #include <iostream>
+#include <memory>
+
+using ObjectPtr = std::shared_ptr<Object>;
+using std::vector;
 
 Color ray_color(const Ray& r) {
     vec3 unit_direction = unit_vector(r.direction());
@@ -14,6 +21,9 @@ Color ray_color(const Ray& r) {
 int main() {
     std::cerr << (-vec3(.1, .2, .3) + vec3(.1, .1, .1)) << std::endl;
     std::cerr << ((-vec3(.1, .2, .3) + vec3(.1, .1, .1)) == vec3(0., -.1, -.2)) << "\n";
+
+    vector<ObjectPtr> scene;
+    scene.push_back(std::make_shared<Sphere>(vec3(0, 0, -1), .5));
 
     // Image
     constexpr auto aspect_ratio = 16.0 / 9.0;
@@ -38,7 +48,16 @@ int main() {
             auto u = double(i) / (image_width-1);
             auto v = double(j) / (image_height-1);
             Ray r(origin, lower_left_corner + u*horizontal + v*vertical - origin);
-            Color pixel_color = ray_color(r);
+
+            auto pixel_color = [&scene](const Ray& r) {
+                for(auto& obj : scene) {
+                    if(obj->ray_hit(r)) {
+                        return Color(1, 0, 0);
+                    }
+                }
+                return ray_color(r);
+            }(r);
+
             write_color(std::cout, pixel_color);
         }
     }

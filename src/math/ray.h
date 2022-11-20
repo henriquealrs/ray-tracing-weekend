@@ -23,7 +23,9 @@ public:
         return dir;
     }
 
-    Point At(double t) {
+    Point At(double t) const {
         return origin + t * dir;
     }
+
+    Point Origin() const { return origin; }
 };
