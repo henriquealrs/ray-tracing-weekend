@@ -2,17 +2,20 @@
 #include "color/color.h"
 #include "math/ray.h"
 #include "math/vec3.h"
+#include "math/math_utils.h"
 #include "objects/object.h"
 #include "objects/sphere.h"
+#include "scene/scene.h"
 
-#include <vector>
 #include <iostream>
-#include <memory>
 
-using ObjectPtr = std::shared_ptr<Object>;
 using std::vector;
 
-Color ray_color(const Ray& r) {
+Color ray_color(const Ray& r, const Scene& world) {
+    hit_record rec;
+    if (world.ray_hit(r, 0, infinity, rec)) {
+        return 0.5 * (rec.normal + Color(1,1,1));
+    }
     vec3 unit_direction = unit_vector(r.direction());
     auto t = 0.5*(unit_direction.y() + 1.0);
     return (1.0-t)*Color(1.0, 1.0, 1.0) + t*Color(0.5, 0.7, 1.0);
@@ -22,8 +25,9 @@ int main() {
     std::cerr << (-vec3(.1, .2, .3) + vec3(.1, .1, .1)) << std::endl;
     std::cerr << ((-vec3(.1, .2, .3) + vec3(.1, .1, .1)) == vec3(0., -.1, -.2)) << "\n";
 
-    vector<ObjectPtr> scene;
-    scene.push_back(std::make_shared<Sphere>(vec3(0, 0, -1), .5));
+    Scene scene;
+    scene.add_object(std::make_shared<Sphere>(Point(0,0,-1), 0.5));
+    scene.add_object(std::make_shared<Sphere>(Point(0,-100.5,-1), 100));
 
     // Image
     constexpr auto aspect_ratio = 16.0 / 9.0;
@@ -49,14 +53,7 @@ int main() {
             auto v = double(j) / (image_height-1);
             Ray r(origin, lower_left_corner + u*horizontal + v*vertical - origin);
 
-            auto pixel_color = [&scene](const Ray& r) {
-                for(auto& obj : scene) {
-                    if(obj->ray_hit(r)) {
-                        return Color(1, 0, 0);
-                    }
-                }
-                return ray_color(r);
-            }(r);
+            auto pixel_color = ray_color(r, scene);
 
             write_color(std::cout, pixel_color);
         }
