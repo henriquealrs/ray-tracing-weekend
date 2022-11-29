@@ -14,7 +14,10 @@ using std::vector;
 Color ray_color(const Ray& r, const Scene& world) {
     hit_record rec;
     if (world.ray_hit(r, 0, infinity, rec)) {
-        return 0.5 * (rec.normal + Color(1,1,1));
+        std::cerr << "== " << rec.normal << "\n";
+        auto ret = 0.5 * (rec.normal + Color(1,1,1));
+        std::cerr << "===  " << ret << "\n";
+        return ret;
     }
     vec3 unit_direction = unit_vector(r.direction());
     auto t = 0.5*(unit_direction.y() + 1.0);
@@ -22,8 +25,12 @@ Color ray_color(const Ray& r, const Scene& world) {
 }
 
 int main() {
-    std::cerr << (-vec3(.1, .2, .3) + vec3(.1, .1, .1)) << std::endl;
-    std::cerr << ((-vec3(.1, .2, .3) + vec3(.1, .1, .1)) == vec3(0., -.1, -.2)) << "\n";
+//    Sphere s(vec3(-15, 0, 0), 5);
+//    hit_record rec;
+//    s.ray_hit(Ray(vec3(0, 0, 0), vec3(-1, 0, 0)), -100, 100, rec);
+//    std::cout << rec.p << "\n";
+//    return 0;
+
 
     Scene scene;
     scene.add_object(std::make_shared<Sphere>(Point(0,0,-1), 0.5));

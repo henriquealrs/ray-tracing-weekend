@@ -15,7 +15,6 @@ public:
     static Ray FromPoints(const Point& p1, const Point& p2) noexcept {
         vec3 dir = p2 + (-p1);
         dir /= dir.length();
-        std::cout << dir << '\n';
         return Ray(p1, dir);
     }
 

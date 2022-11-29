@@ -10,7 +10,12 @@ public:
     vec3() : e{0,0,0} {}
     vec3(double x, double y, double z) :
         len_sqr(x*x + y*y + z*z), len(std::sqrt(len_sqr)), e{x, y, z}
-    {}
+    {/*std::cout << "new "*/;}
+
+//    vec3(const vec3& v) {
+//        std::cout << "copy ";
+//        vec3(v.e[0], v.e[1], v.e[2]);
+//    }
 
     vec3 operator+(const vec3& op) const noexcept {
         return vec3(this->e[0] + op.e[0], this->e[1] + op.e[1], this->e[2] + op.e[2]);
@@ -73,8 +78,11 @@ public:
                 ( std::abs(e[2] -  v.e[2]) > COMPARE_THRESHOLD);
     }
 
-    vec3 operator=(const vec3& orig) {
-        return vec3(orig);
+    vec3& operator=(const vec3& orig) {
+        this->e[0] = orig.x();
+        this->e[1] = orig.y();
+        this->e[2] = orig.z();
+        return *this;
     }
 
     double e[3];

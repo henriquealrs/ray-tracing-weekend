@@ -2,6 +2,7 @@
 #include "math/vec3.h"
 #include <cmath>
 
+#include <iostream>
 
 bool Sphere::ray_hit(const Ray &r, double t_min, double t_max, hit_record &rec) const
 {
@@ -24,6 +25,7 @@ bool Sphere::ray_hit(const Ray &r, double t_min, double t_max, hit_record &rec) 
 
     rec.t = root;
     rec.p = r.At(rec.t);
+
     auto outward_normal = (rec.p - centre) / radius;
     rec.set_fase_normal(r, outward_normal);
 
