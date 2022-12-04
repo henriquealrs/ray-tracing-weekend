@@ -17,6 +17,7 @@ target_link_libraries(
   tests
   GTest::gtest_main
 )
+target_link_libraries(raytracing  )
 
 include(GoogleTest)
 gtest_discover_tests(tests)

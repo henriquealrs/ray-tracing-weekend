@@ -19,6 +19,17 @@ target_include_directories(raytracing PRIVATE "src")
 # Just for example add some compiler flags.
 target_compile_options(raytracing PUBLIC -O2 -Wall -Wfloat-conversion)
 
+find_package(Boost 1.80 ) #REQUIRED COMPONENTS
+             #functional filesystem iostreams
+
+
+if (Boost_FOUND)
+    include_directories(${Boost_INCLUDE_DIRS})
+endif()
+
+target_link_libraries(raytracing )
+
+
 enable_testing()
 add_subdirectory( tests)
 
