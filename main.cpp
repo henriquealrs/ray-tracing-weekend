@@ -61,7 +61,7 @@ int main() {
     for (int j = image_height-1; j >= 0; --j) {
         std::cerr << "\rScanlines remaining: " << j << ' ' << std::flush;
         for (int i = 0; i < image_width; ++i) {
-            Color pixel_color;
+            Color pixel_color(0, 0, 0);
             for(int i = 0; i < samples_per_pixel; ++i) {
                 auto u = (i + random_double<double>()) / (image_width - 1);
                 auto v = (j + random_double<double>()) / (image_height - 1);
