@@ -62,7 +62,7 @@ int main() {
         std::cerr << "\rScanlines remaining: " << j << ' ' << std::flush;
         for (int i = 0; i < image_width; ++i) {
             Color pixel_color(0, 0, 0);
-            for(int i = 0; i < samples_per_pixel; ++i) {
+            for(int s = 0; s < samples_per_pixel; ++s) {
                 auto u = (i + random_double<double>()) / (image_width - 1);
                 auto v = (j + random_double<double>()) / (image_height - 1);
                 auto ray = cam.get_ray(u, v);

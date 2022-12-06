@@ -15,6 +15,15 @@ TEST(Vec3, Sum) {
 
 TEST(Vec3, division) {
     ASSERT_TRUE((vec3(3, 4, 5) / 10) == vec3(.3, .4, .5));
+    vec3 v{2,2,2};
+    v /= 2;
+    ASSERT_TRUE(v == vec3(1, 1, 1));
+    v += vec3(1, 2, 3);
+    ASSERT_TRUE(v == vec3(2, 3, 4));
+
+    v = vec3(2, 2, 2);
+    ASSERT_TRUE((v/2 + vec3(1, 2, 3)) == vec3(2, 3, 4));
+
 }
 
 
